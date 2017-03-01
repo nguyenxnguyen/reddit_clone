@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="container">
+        {% load static %}
+        <img src="{% static "home.jpg" %}" class="img-circle center-block" alt="Cinque Terre" style="max-width: 25%"/>
+        <br/>
+        <h2 align="right"><a href="{% url 'posts:create_post' %}">Create Post</a></h2>
+        {% load static %}
+        <h2>Posts</h2>
+            {% for post in posts.all %}
+            <table style="border-collapse:separate;border-spacing:12px">
+                <tr>
+                    <td>
+                        <form id="upvote" method="POST" action="{% url 'home:upvote' post.id %}">
+                            {% csrf_token %}
+                            <a href="#" onClick="document.getElementById('upvote').submit()"><span class="glyphicon glyphicon-arrow-up" style="font-size:25px;color:#09f"></span></a>
+                        </form>
+                        <center><b>{{ post.votes_total }}</b></center>
+                        <form id="downvote" method="POST" action="{% url 'home:downvote' post.id %}">
+                            {% csrf_token %}
+                            <a href="#" onClick="document.getElementById('downvote').submit()"><span class="glyphicon glyphicon-arrow-down" style="font-size:25px;color:#999"></span></a>
+                        </form>
+                    </td>
+                    <td>
+                        <h3><a href="{{ post.url }}"> {{ post.title }}</a></h3>
+                        <h4><span class="glyphicon glyphicon-time" aria-hidden="true"></span>{{ post.pretty_pub_date }} by {{ post.author}}</h4>
+                    </td>
+                </tr>
+            </table>
+            {% endfor %}
+    </div>
+{% endblock %}
+
+  
+

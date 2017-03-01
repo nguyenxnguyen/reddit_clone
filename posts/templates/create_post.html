@@ -1,0 +1,33 @@
+{% extends 'base.html' %} 
+
+{% block content %}
+<div class="container">
+	<div id="create_post" class="animate form">
+		<form method="POST" action="{% url 'posts:create_post' %}" autocomplete="on">
+			{% csrf_token %} {% if request.GET.next %}
+			<input type="hidden" name="next" value="{{ request.GET.next }}"> {% endif %}
+			<h1>New post</h1>
+			<p>
+				<label for="title_post" class="title_post" data-icon="u">Title: </label>
+				<br/>
+				<input id="title_post" name="title_post" required="required" type="text" />
+			</p>
+			<p>
+				<label for="url_post" class="url_post" data-icon="p">Url: </label>
+				<br/>
+				<input id="url_post" name="url_post" required="required" type="url" />
+			</p>
+			<p class="post button">
+				<input type="submit" value="Post" />
+			</p>
+			<p class="message">
+				{% if msg %}
+				<h4>{{ msg }}</h4>
+				{% else %}
+				<h4>Make your post</h4>
+				{% endif %}
+			</p>
+		</form>
+	</div>
+</div>
+{% endblock %}
